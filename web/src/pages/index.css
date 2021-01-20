@@ -5,18 +5,6 @@
   top: 0;
   width: 40%;
 }
-.right-container {
-  position: absolute;
-  width: 60%;
-  left: 40%;
-  top: 0;
-  height: 100%;
-  padding: 0;
-  padding-left: 5px;
-  border: none;
-  z-index: 30;
-  background: #f3f3f3;
-}
 
 .control-panel {
   height: 30px;
@@ -36,8 +24,25 @@
   padding: 10px;
 }
 
+.code-info-type-error {
+  color: #e43c59;
+}
+
 .run {
   /* position: absolute;
   top: 2px;
   left: 40%; */
+}
+
+.right-container {
+  position: absolute;
+  width: 60%;
+  left: 40%;
+  top: 0;
+  height: 100%;
+  padding: 0;
+  padding-left: 5px;
+  border: none;
+  z-index: 30;
+  background: #f3f3f3;
 }

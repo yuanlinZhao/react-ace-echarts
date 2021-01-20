@@ -9,34 +9,46 @@ class AceEcharts extends Component {
     super(props);
     this.state = {
       option: {},
-      aceValue: "",
+      formatValue: {},
+      hasError: false,
     };
   }
 
   onChange = (value) => {
-    this.setState({
-      aceValue: value,
-    });
+    try {
+      let option;
+      eval(value);
+      this.setState({
+        hasError: !!option ? false : true,
+        formatValue: !!option ? option : {},
+      });
+    } catch (exception) {
+      this.setState({
+        hasError: true,
+        formatValue: {},
+      });
+    }
   };
 
   // 更改图表
   changeChart = () => {
-    const { aceValue } = this.state;
-    let option;
-    eval(aceValue);
+    const { formatValue } = this.state;
     this.setState({
-      option,
+      option: formatValue,
     });
   };
 
   render() {
-    const { option } = this.state;
+    const { option, hasError } = this.state;
     // console.log("this.aceEditor", this.aceEditor);
 
     return (
       <div style={{ width: "100%" }}>
         <div className="code-container">
           <div className="control-panel">
+            {hasError && (
+              <span className="code-info-type-error">编辑器内容有误</span>
+            )}
             <button onClick={this.changeChart} className="run">
               执行
             </button>
@@ -49,7 +61,7 @@ class AceEcharts extends Component {
             placeholder="请输入option"
             mode="javascript"
             fontSize={14}
-            theme="kuroir"
+            // theme="kuroir"
             onChange={this.onChange}
             name="UNIQUE_ID_OF_DIV"
             editorProps={{ $blockScrolling: true }}
@@ -57,12 +69,7 @@ class AceEcharts extends Component {
           />
         </div>
         <div className="right-container">
-          <ReactEcharts
-            id="echarts"
-            option={option}
-            notMerge
-            lazyUpdate
-          />
+          <ReactEcharts id="echarts" option={option} notMerge lazyUpdate />
         </div>
       </div>
     );
